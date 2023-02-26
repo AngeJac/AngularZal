@@ -15,7 +15,7 @@ export class AppComponent {
   public activePlayer = '';
   public readyToPlay = false;
 
-  public onFormCompleted(playerName: string) {
+  public onFormCompleted(playerName: string): void {
     if (playerName) {
       this.readyToPlay = true;
       this.activePlayer = playerName;

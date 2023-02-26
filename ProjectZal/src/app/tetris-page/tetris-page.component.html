@@ -1,4 +1,4 @@
-<h1>GOOD LUCK {{ playerName }}</h1>
+<h1>GOOD LUCK {{ playerName }}!!</h1>
 <div class="gameInfo">
     <div>
         <p>{{ gameStatus }}</p>
@@ -17,17 +17,16 @@
     <div class="gameControl">
 
         <div class="gameControl__status">
-            <td> <button [disabled]="isGameActive || gameStatus === 'GAME OVER'" class="button"
-                    (click)="game.actionStart(); gameStarted()">
+            <td> <button class="button" (click)="onStartButtonPressed( )">
                     START
                 </button></td>
-            <td><button [disabled]="!isGameActive" class="button" (click)="game.actionStop()">
+            <td><button class="button" (click)="onStopButtonPressed()">
                     STOP
                 </button></td>
-            <td><button class="button" (click)="game.actionReset()">
+            <td><button class="button" (click)="onResetButtonPressed()">
                     RESET
                 </button></td>
-            <td><button class="button" (click)="onExitClick()">EXIT</button></td>
+            <td><button class="button" (click)="onExitButtonPressed()">EXIT</button></td>
         </div>
         <tr>
             <td></td>
@@ -48,20 +47,20 @@
             <td></td>
         </tr>
         <div class="gameControl__drops">
-            <td><button [disabled]=" !isGameActive" class='button' (click)="game.actionRotate()">
+            <td><button class='button' (click)="onRotationButtonPressed()">
                     ROTATE
                 </button></td>
         </div>
         <div class="gameControl__moves">
-            <td><button [disabled]="!isGameActive" class="button" (click)="game.actionLeft()">
+            <td><button class="button" (click)="onLeftButtonPressed()">
                     LEFT
                 </button></td>
-            <td><button class='button' (click)=" game.actionRight()">
+            <td><button class='button' (click)=" onRightButtonPressed()">
                     RIGHT
                 </button></td>
         </div>
         <div class="gameControl__moves">
-            <td><button [disabled]="!isGameActive" class="button" (click)="game.actionDown()">
+            <td><button class="button" (click)="onDownButtonPressed()">
                     DOWN
                 </button>
             </td>
@@ -73,7 +72,7 @@
             <td></td>
         </tr>
         <div class="gameControl__drops">
-            <td> <button [disabled]="!isGameActive" class="button" (click)="game.actionDrop()">
+            <td> <button class="button" (click)="onDropButtonPressed()">
                     DROP
                 </button></td>
         </div>
