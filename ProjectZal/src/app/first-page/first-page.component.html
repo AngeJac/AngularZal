@@ -1,1 +1,21 @@
-<p>first-page works!</p>
+<header class="header">
+    <h1>HELLO! IT'S TETRIS TIME!</h1>
+</header>
+
+<form class="playerForm" #playerForm="ngForm" (ngSubmit)="onSubmit(playerForm.form.value.playerName)">
+    <label for="playerName">PLAYER NAME: </label>
+    <input id="playerName" name="playerName" #playerNameModel="ngModel" minlength="3" placeholder="ENTER YOUR NAME"
+        required ngModel />
+    <p class="errorMessage" *ngIf="playerNameModel.touched && playerNameModel.invalid">
+        PLEASE, ENTER CORRECT PLAYER NAME
+    </p>
+    <br />
+    <label for="email">PLAYER EMAIL: </label>
+    <input id="email" name="email" #emailModel="ngModel" required pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$"
+        placeholder="ENTER YOUR EMAIL" ngModel />
+    <p class="errorMessage" *ngIf="emailModel.touched && emailModel.invalid">
+        PLEASE, ENTER CORRECT EMAIL ADRESS
+    </p>
+    <br />
+    <button [disabled]="playerForm.valid === false">Go on!</button>
+</form>

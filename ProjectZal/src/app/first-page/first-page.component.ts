@@ -1,10 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-first-page',
+  selector: 'app-form',
   templateUrl: './first-page.component.html',
-  styleUrls: ['./first-page.component.css']
+  styleUrls: ['./first-page.component.scss'],
 })
 export class FirstPageComponent {
+  @Output() public formCompleted = new EventEmitter<string>();
 
+  public onSubmit(playerName: string) {
+    this.formCompleted.emit(playerName);
+  }
 }

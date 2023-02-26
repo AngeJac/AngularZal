@@ -1,51 +1,81 @@
-<!-- <tetris-core #game [class.black-and-white]="bw" tileSize="20px" (lineCleared)="onLineCleared()"
-    (gameOver)="onGameOver()"></tetris-core> -->
-<div class="tetris">
-    <div class="tetris-game">
-        <!-- <ngx-tetris #game></ngx-tetris> -->
+<h1>GOOD LUCK {{ playerName }}</h1>
+<div class="gameInfo">
+    <div>
+        <p>{{ gameStatus }}</p>
     </div>
-    <table class="controls">
-        <tr>
-            <td><button (click)="game.actionStart()">Start</button></td>
-            <td><button (click)="game.actionStop()">Stop</button></td>
-            <td><button (click)="game.actionReset()">Reset</button></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td></td>
-        </tr>
-        <tr>
-            <td></td>
-        </tr>
-        <tr>
-            <td></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><button (click)="game.actionRotate()">Rotate</button></td>
-        </tr>
-        <tr>
-            <td><button (click)="game.actionLeft()">Left</button></td>
-            <td></td>
-            <td><button (click)="game.actionRight()">Right</button></td>
+</div>
+<div>
+    <p>Time played: {{ gamePlayTime }}</p>
+</div>
+<div>
+    <p>Your score: {{ score }}</p>
+</div>
+<div class="game">
+    <div class="gameBoard">
+        <tetris-core #game (lineCleared)="onLineCleared()" (gameOver)="onGameOver()"></tetris-core>
+    </div>
+    <div class="gameControl">
 
+        <div class="gameControl__status">
+            <td> <button [disabled]="isGameActive || gameStatus === 'GAME OVER'" class="button"
+                    (click)="game.actionStart(); gameStarted()">
+                    START
+                </button></td>
+            <td><button [disabled]="!isGameActive" class="button" (click)="game.actionStop()">
+                    STOP
+                </button></td>
+            <td><button class="button" (click)="game.actionReset()">
+                    RESET
+                </button></td>
+            <td><button class="button" (click)="onExitClick()">EXIT</button></td>
+        </div>
+        <tr>
+            <td></td>
         </tr>
         <tr>
             <td></td>
-            <td><button (click)="game.actionDown()">Down</button></td>
-            <td><button (click)="game.actionDrop()">Drop</button></td>
         </tr>
-        <tr style="height: 20px">
+        <tr>
             <td></td>
         </tr>
         <tr>
-            <td colspan="3">
-                <button *ngIf="!bw" class="bw" (click)="bw = true">Go B/W !</button>
-                <button *ngIf="bw" class="colors" (click)="bw = false">
-                    <span class="green">no, </span>
-                    <span>back to</span>
-                    <span class="red">colors</span>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+        </tr>
+        <div class="gameControl__drops">
+            <td><button [disabled]=" !isGameActive" class='button' (click)="game.actionRotate()">
+                    ROTATE
+                </button></td>
+        </div>
+        <div class="gameControl__moves">
+            <td><button [disabled]="!isGameActive" class="button" (click)="game.actionLeft()">
+                    LEFT
+                </button></td>
+            <td><button class='button' (click)=" game.actionRight()">
+                    RIGHT
+                </button></td>
+        </div>
+        <div class="gameControl__moves">
+            <td><button [disabled]="!isGameActive" class="button" (click)="game.actionDown()">
+                    DOWN
                 </button>
             </td>
+        </div>
+        <tr>
+            <td></td>
         </tr>
-    </table>
+        <tr>
+            <td></td>
+        </tr>
+        <div class="gameControl__drops">
+            <td> <button [disabled]="!isGameActive" class="button" (click)="game.actionDrop()">
+                    DROP
+                </button></td>
+        </div>
+
+    </div>
