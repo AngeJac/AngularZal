@@ -6,6 +6,7 @@ import { FirstPageComponent } from './first-page/first-page.component';
 import { TetrisPageComponent } from './tetris-page/tetris-page.component';
 import { PlayerService } from './player.service';
 import { HighscoresComponent } from './HighscoresComponent/highscores.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
   { path: 'first-page', component: FirstPageComponent },
@@ -21,7 +22,7 @@ const routes: Routes = [
     TetrisPageComponent,
     HighscoresComponent,
   ],
-  imports: [BrowserModule, RouterModule.forRoot(routes)],
+  imports: [BrowserModule, RouterModule.forRoot(routes), ReactiveFormsModule],
   providers: [PlayerService],
   bootstrap: [AppComponent],
 })

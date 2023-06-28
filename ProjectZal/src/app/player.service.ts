@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class PlayerService {
   private playerName: string = '';
   private playerData: any = {};
+  private colorPalette: string = 'normal';
 
   getPlayerName(): string {
     return this.playerName;
