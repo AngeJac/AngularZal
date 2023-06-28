@@ -1,3 +1,7 @@
+.header {
+  text-align: center;
+}
+
 .game {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -57,6 +61,7 @@
   font-weight: bold;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 12px;
+
   &:hover:not(:disabled) {
     background-color: #eee;
     color: #222;

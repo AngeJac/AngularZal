@@ -7,16 +7,18 @@ describe('TetrisPageComponent ', () => {
   let fixture: ComponentFixture<TetrisPageComponent>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       declarations: [TetrisPageComponent],
     }).compileComponents();
+  });
 
+  beforeEach(() => {
     fixture = TestBed.createComponent(TetrisPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create TetrisPageComponent instance', () => {
     expect(component).toBeTruthy();
   });
 });

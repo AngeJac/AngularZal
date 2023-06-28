@@ -2,17 +2,37 @@
     <h1>HELLO! IT'S TETRIS TIME!</h1>
 </header>
 
-<form class="playerForm" #playerForm="ngForm" (ngSubmit)="onSubmit(playerForm.form.value.playerName)">
-    <label for="playerName">PLAYER NAME: </label>
-    <input id="playerName" name="playerName" #nameModel="ngModel" minlength="3" ngModel required class="form-control"
-        id="exampleFormControlInput1" placeholder="Jan Kowalski" />
-    <span *ngIf="nameModel.touched && !nameModel.valid" class="errorName" style="color: red">Min. 3 characters!</span>
-    <br />
-    <label for="email">E-MAIL: </label>
-    <input id="email" name="email" #emailModel="ngModel" ngModel required
-        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" type="email" class="form-control"
-        id="exampleFormControlInput1" placeholder="name@example.com" />
-    <span *ngIf="emailModel.touched && !emailModel.valid" class="errorEmail" style="color: red">Invalid e-mail!</span>
-    <br />
-    <button [disabled]="playerForm.valid === false">Go on!</button>
+<div class="player-form">
+    <form (ngSubmit)="onFormSubmit()" #form="ngForm">
+        <label for="playerName">PLAYER NAME: </label>
+        <input id="playerName" name="playerName" [(ngModel)]="playerName" required minlength="5" />
+        <div *ngIf="form.controls['playerName']?.touched && form.controls['playerName']?.errors?.required">
+            Player name is required!
+        </div>
+        <div *ngIf="form.controls['playerName']?.touched && form.controls['playerName']?.errors?.minlength">
+            Player name must be at least 5 charcters long!
+        </div>
+        <p>Example: Jan Kowalski</p>
+        <label for="email">E-MAIL: </label>
+        <input id="email" name="email" [(ngModel)]="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+            type="email" />
+        <div *ngIf="form.controls['email']?.touched && form.controls['email']?.error?.required">
+            Email is required!
+        </div>
+        <div *ngIf="form.controls['email']?.touched && form.controls['email']?.error.pattern">
+            Invalid email format!
+        </div>
+</div>
+<label for="colorPalette">Color Palette:</label>
+<select id="colorPalette" name="colorPalette" [(ngModel)]="colorPalette">
+    <option value="normal">Normal</option>
+    <option value="highContrast">High Contrast</option>
+</select>
+
+
+<button type="submit" [disabled]="!form.valid">Go on!</button>
 </form>
+</div>
+<div *ngIf="readyToPlay">
+    <app-tetris.page [playerName]="playerName" (onGameExit)="onGameFinished($event)"></app-tetris.page>
+</div>

@@ -1,80 +1,58 @@
-<h1>GOOD LUCK {{ playerName }}!!</h1>
-<div class="gameInfo">
-    <div>
-        <p>{{ gameStatus }}</p>
+<header class="header">
+    <h1>HELLO! IT'S TETRIS TIME!</h1>
+</header>
+<a routerLink="/highscores">Highscores</a>
+<nav>
+    <a routerLink="/first-page">First Page</a>
+    <a routerLink="/tetris-page">Tetris Page</a>
+</nav>
+
+<div class="playerForm">
+    <h1>GOOD LUCK {{ playerName }}!!</h1>
+
+    <div class="gameInfo">
+        <div>
+            <p>{{ gameStatus }}</p>
+        </div>
     </div>
-</div>
-<div>
-    <p>Time played: {{ gamePlayTime }}</p>
-</div>
-<div>
-    <p>Your score: {{ score }}</p>
-</div>
-<div class="game">
+
+    <div>
+        <p>Time played: {{ gamePlayTime }}</p>
+    </div>
+
+    <div>
+        <p>Your score: {{ score }}</p>
+    </div>
+
     <div class="gameBoard">
-        <tetris-core #game (lineCleared)="onLineCleared()" (gameOver)="onGameOver()"></tetris-core>
+        <tetris-core #game [ngClass]="{ 'black-and-white': colorPalette === 'highContrast' }"
+            (lineCleared)="onLineCleared()" (gameOver)="onGameOver()"></tetris-core>
     </div>
     <div class="gameControl">
-
         <div class="gameControl__status">
-            <td> <button class="button" (click)="onStartButtonPressed( )">
-                    START
-                </button></td>
-            <td><button class="button" (click)="onStopButtonPressed()">
-                    STOP
-                </button></td>
-            <td><button class="button" (click)="onResetButtonPressed()">
-                    RESET
-                </button></td>
-            <td><button class="button" (click)="onExitButtonPressed()">EXIT</button></td>
+            <button class="button" (click)="onStartButtonPressed()">START</button>
+            <button class="button" (click)="onStopButtonPressed()">STOP</button>
+            <button class="button" (click)="onResetButtonPressed()">RESET</button>
+            <button class="button" (click)="onExitButtonPressed()">EXIT</button>
         </div>
-        <tr>
-            <td></td>
-        </tr>
-        <tr>
-            <td></td>
-        </tr>
-        <tr>
-            <td></td>
-        </tr>
-        <tr>
-            <td></td>
-        </tr>
-        <tr>
-            <td></td>
-        </tr>
-        <tr>
-            <td></td>
-        </tr>
         <div class="gameControl__drops">
-            <td><button class='button' (click)="onRotationButtonPressed()">
-                    ROTATE
-                </button></td>
+            <button class="button" (click)="onRotationButtonPressed()">ROTATE</button>
         </div>
         <div class="gameControl__moves">
-            <td><button class="button" (click)="onLeftButtonPressed()">
-                    LEFT
-                </button></td>
-            <td><button class='button' (click)=" onRightButtonPressed()">
-                    RIGHT
-                </button></td>
+            <button class="button" (click)="onLeftButtonPressed()">LEFT</button>
+            <button class="button" (click)="onRightButtonPressed()">RIGHT</button>
         </div>
         <div class="gameControl__moves">
-            <td><button class="button" (click)="onDownButtonPressed()">
-                    DOWN
-                </button>
-            </td>
+            <button class="button" (click)="onDownButtonPressed()">DOWN</button>
         </div>
-        <tr>
-            <td></td>
-        </tr>
-        <tr>
-            <td></td>
-        </tr>
         <div class="gameControl__drops">
-            <td> <button class="button" (click)="onDropButtonPressed()">
-                    DROP
-                </button></td>
+            <button class="button" (click)="onDropButtonPressed()">DROP</button>
         </div>
-
     </div>
+    <label for="colorPalette">Color Palette:</label>
+    <select id="colorPalette" name="colorPalette" [(ngModel)]="colorPalette" (ngModelChange)="onColorPaletteChange()">
+        <option value="normal">Normal</option>
+        <option value="highContrast">High Contrast</option>
+    </select>
+</div>
+</div>

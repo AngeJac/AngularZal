@@ -1,12 +1,14 @@
 import {
   Component,
   EventEmitter,
-  Input,
   Output,
   OnInit,
   ViewChild,
 } from '@angular/core';
 import { TetrisCoreComponent } from 'ngx-tetris';
+import { ActivatedRoute } from '@angular/router';
+import { PlayerService } from '../player.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-game',
@@ -14,121 +16,128 @@ import { TetrisCoreComponent } from 'ngx-tetris';
   styleUrls: ['./tetris-page.component.scss'],
 })
 export class TetrisPageComponent implements OnInit {
-  @Input() public playerName: string = '';
-  public score: number = 0;
-  public timer: number = 0;
-  public gamePlayTime: string = '00:00';
-  public interval: any;
+  public playerName: string = '';
+  public score = 0;
+  public gamePlayTime = '00:00';
   public timerInterval: any;
-  public timePlayed: number = 0;
-  public gameStatus: string = '';
-  @Output() public exit = new EventEmitter<boolean>();
+  public timePlayed = 0;
+  public gameStatus = '';
+  public colorPalette: string = 'normal';
+
   @Output() public onGameExit = new EventEmitter<boolean>();
   @Output() public scoreValue = new EventEmitter<number>();
   @Output() public timerValue = new EventEmitter<number>();
 
-  public moves = [
-    'start',
-    'stop',
-    'reset',
-    'pause',
-    'rotate',
-    'move left',
-    'move right',
-    'move down',
-    'drop',
-    'line cleared',
-    'Game over',
-  ];
-  public isGameActive = false;
+  @ViewChild(TetrisCoreComponent, { static: false })
+  private _tetris!: TetrisCoreComponent;
 
-  public onLineCleared() {
+  public onLineCleared = () => {
     this.score++;
     this.scoreValue.emit(this.score);
-  }
-  public onGameOver() {
-    this.isGameActive = false;
-    clearInterval(this.timerInterval);
-    this.timer = 0;
+  };
+
+  public onGameOver = () => {
     this.gameStatus = 'GAME OVER';
-  }
-  public startTimer() {
-    if (this.interval) {
+  };
+  public startTimer = () => {
+    if (this.timerInterval) {
       this.pauseTimer();
     }
-    this.interval = setInterval(() => {
+    this.timerInterval = setInterval(() => {
       this.timePlayed++;
       this.displayTime();
     }, 1000);
-  }
+  };
 
-  public pauseTimer() {
-    clearInterval(this.interval);
-  }
-  public displayTime() {
-    const min: string = String(Math.trunc(this.timePlayed / 60)).padStart(
-      2,
-      '0'
-    );
-    const sec: string = String(this.timePlayed % 60).padStart(2, '0');
+  public pauseTimer = () => {
+    clearInterval(this.timerInterval);
+  };
+
+  public displayTime = () => {
+    const min = String(Math.trunc(this.timePlayed / 60)).padStart(2, '0');
+
+    const sec = String(this.timePlayed % 60).padStart(2, '0');
 
     this.gamePlayTime = `${min}:${sec}`;
-  }
-  public onExitButtonPressed() {
+  };
+  public onExitButtonPressed = () => {
     this.onGameExit.emit(true);
     this.score = 0;
     clearInterval(this.timerInterval);
-    this.timer = 0;
-    this.timerValue.emit(this.timer);
+    this.timePlayed = 0;
+    this.timerValue.emit(this.timePlayed);
     this.scoreValue.emit(this.score);
     this.gameStatus = 'READY';
     this._tetris.actionReset();
-  }
+  };
 
-  public onRotateButtonPressed() {
+  public onRotateButtonPressed = () => {
     this._tetris.actionRotate();
-  }
-  @ViewChild('game')
-  private _tetris!: TetrisCoreComponent;
+  };
 
-  public onStartButtonPressed() {
+  public onRotationButtonPressed = () => {
+    this._tetris.actionRotate();
+  };
+  public onLeftButtonPressed = () => {
+    this._tetris.actionLeft();
+  };
+  public onRightButtonPressed = () => {
+    this._tetris.actionRight();
+  };
+  public onDownButtonPressed = () => {
+    this._tetris.actionDown();
+  };
+  public onDropButtonPressed = () => {
+    this._tetris.actionDrop();
+  };
+
+  public onStartButtonPressed = () => {
     this._tetris.actionStart();
     this.gameStatus = 'START';
-    this.gamePlayTime;
     this.startTimer();
-  }
-  public onStopButtonPressed() {
+  };
+  public onStopButtonPressed = () => {
     this._tetris.actionStop();
-    this.timer = this.timer;
     clearInterval(this.timerInterval);
-    this.timerValue.emit(this.timer);
     this.gameStatus = 'PAUSE';
-    this.pauseTimer();
-  }
-  public onResetButtonPressed() {
+  };
+
+  public onResetButtonPressed = () => {
     this.score = 0;
+    this.timePlayed = 0;
     clearInterval(this.timerInterval);
-    this.timer = 0;
-    this.timerValue.emit(this.timer);
+    this.timerValue.emit(this.timePlayed);
     this.scoreValue.emit(this.score);
     this.gameStatus = 'READY, STEADY, GO!';
     this._tetris.actionReset();
+  };
+
+  constructor(
+    private playerService: PlayerService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      this.colorPalette = params['colors'] || 'normal';
+    });
+    this.loadHighscores();
   }
-  public onRotationButtonPressed() {
-    this._tetris.actionRotate();
+  loadHighscores(): void {
+    this.playerService
+      .getCurrentHighscores('tetris', this.colorPalette)
+      .then((highscores) => {
+        console.log(highscores);
+      })
+      .catch((error) => {
+        console.error(
+          'Wystąpił błąd podczas pobierania najlepszych wyników:',
+          error
+        );
+      });
   }
-  public onLeftButtonPressed() {
-    this._tetris.actionLeft();
+  onColorPaletteChange(): void {
+    this.router.navigate(['/tetris-page', this.colorPalette]);
   }
-  public onRightButtonPressed() {
-    this._tetris.actionRight();
-  }
-  public onDownButtonPressed() {
-    this._tetris.actionDown();
-  }
-  public onDropButtonPressed() {
-    this._tetris.actionDrop();
-  }
-  constructor() {}
-  ngOnInit(): void {}
 }

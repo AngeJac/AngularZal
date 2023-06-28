@@ -1,0 +1,13 @@
+<h2>Top 10 Highscores</h2>
+
+<button (click)="changeSortOrder()">Sort {{ sortBy === 'asc' ? 'Ascending' : 'Descending' }}</button>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Score</th>
+    </tr>
+    <tr *ngFor="let score of highscores">
+        <td>{{ score.name }}</td>
+        <td>{{ score.score }}</td>
+    </tr>
+</table>

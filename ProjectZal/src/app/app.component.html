@@ -1,7 +1,10 @@
-<div *ngIf="!readyToPlay">
-  <app-form (formCompleted)="onFormCompleted($event)"></app-form>
-</div>
+<header class="header">
+  <h1>HELLO! IT'S TETRIS TIME!</h1>
+</header>
 
-<div *ngIf="readyToPlay">
-  <app-game class="gameContainer" [playerName]="activePlayer" (onGameExit)="onGameFinished($event)"></app-game>
-</div>
+<nav>
+  <a routerLink="/first-page">First Page</a>
+  <a routerLink="/tetris-page">Tetris Page</a>
+</nav>
+
+<router-outlet></router-outlet>
