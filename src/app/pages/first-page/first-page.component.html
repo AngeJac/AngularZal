@@ -1,0 +1,12 @@
+<header>
+  <h1>HELLO! IT'S TETRIS TIME!</h1>
+</header>
+
+<div>
+  <h2>GOOD LUCK!!</h2>
+  <app-player-form
+    [playerData]="playerData"
+    (colorChanged)="onColorPaletteChange($event)"
+    (playerSubmitted)="onFormSubmit($event)"
+  ></app-player-form>
+</div>

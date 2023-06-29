@@ -1,0 +1,17 @@
+<div class="status">
+  <button (click)="start.emit()">START</button>
+  <button (click)="stop.emit()">STOP</button>
+  <button (click)="reset.emit()">RESET</button>
+  <button (click)="exit.emit()">EXIT</button>
+</div>
+
+<div class="drops">
+  <button (click)="drop.emit()">DROP</button>
+</div>
+
+<nav class="d-pad">
+  <button class="button up" (click)="rotate.emit()"></button>
+  <button class="button right" (click)="right.emit()"></button>
+  <button class="button down" (click)="down.emit()"></button>
+  <button class="button left" (click)="left.emit()"></button>
+</nav>

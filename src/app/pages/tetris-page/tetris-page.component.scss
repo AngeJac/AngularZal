@@ -1,0 +1,12 @@
+.header {
+  text-align: center;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+}
+
+.controls {
+  display: flex;
+}

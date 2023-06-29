@@ -1,0 +1,31 @@
+<main>
+  <section>
+    <h1>GOOD LUCK {{ playerName }}!!</h1>
+    <p>{{ gameStatus | async }}</p>
+    <p>Time played: {{ gamePlayTime | async | date : "mm:ss" }}</p>
+    <p>Your score: {{ score | async }}</p>
+  </section>
+
+  <section>
+    <tetris-core
+      #game
+      [ngClass]="{ 'black-and-white': colorPalette === 'highContrast' }"
+      (lineCleared)="onLineCleared()"
+      (gameOver)="onGameOver()"
+    ></tetris-core>
+  </section>
+
+  <section class="controls">
+    <app-tetris-controls
+      (start)="onStart()"
+      (stop)="onStop()"
+      (reset)="onReset()"
+      (exit)="onExit()"
+      (rotate)="game.actionRotate()"
+      (left)="game.actionLeft()"
+      (right)="game.actionRight()"
+      (down)="game.actionDown()"
+      (drop)="game.actionDrop()"
+    ></app-tetris-controls>
+  </section>
+</main>

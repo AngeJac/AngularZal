@@ -1,0 +1,38 @@
+<form [formGroup]="playerForm" (ngSubmit)="onFormSubmit()">
+  <label for="playerName">PLAYER NAME: </label>
+  <input id="playerName" formControlName="playerName" />
+  <div *ngIf="playerNameCtrl.touched && playerNameCtrl.hasError('required')">
+    Player name is required!
+  </div>
+  <div
+    *ngIf="
+      playerNameCtrl.invalid && (playerNameCtrl.dirty || playerNameCtrl.touched)
+    "
+  >
+    <div *ngIf="playerNameCtrl.hasError('required')">
+      Player name is required!
+    </div>
+    <div *ngIf="playerNameCtrl.hasError('minlength')">
+      Player name must be at least 5 characters long!
+    </div>
+  </div>
+
+  <label for="authCode">AUTH CODE:</label>
+  <input id="authCode" formControlName="authCode" />
+
+  <div
+    *ngIf="autCodeCtrl.invalid && (autCodeCtrl.dirty || autCodeCtrl.touched)"
+  >
+    <div *ngIf="autCodeCtrl.hasError('required')">Auth code is required!</div>
+    <div *ngIf="autCodeCtrl.hasError('minlength')">
+      Auth code must be at least 5 characters long!
+    </div>
+  </div>
+  <label for="colorPalette">Color Palette:</label>
+  <select id="colorPalette" formControlName="colorPalette">
+    <option value="normal">Normal</option>
+    <option value="highContrast">High Contrast</option>
+  </select>
+
+  <button type="submit" [disabled]="playerForm.invalid">Go on!</button>
+</form>
